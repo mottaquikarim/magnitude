@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Magnitude</title>
+        <link rel='stylesheet' href="styles/primer.css"/>
+        <link rel='stylesheet' href="styles/main.css"/>
+    </head>
+    <body>
+        <div class="main">
+
+        </div>
+
+        <script id="home-init" type="foo/bar">
+            <div class="table-wrapper">
+                <div class="container table-container">
+                    <div class="columns">
+                      <div class="three-fourths column centered">
+                        <div class="blankslate spacious clean-background">
+                            <h1>Welcome!</h1>
+                            <p class="lead">Please login to continue</p>
+                            <button class="login btn btn-primary" type="button">Log In</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <script id="home-list" type="foo/bar">
+                <div class="container">
+                    <div class="columns">
+                        <div class="three-fourths column centered">
+                            <h3 class="box__header">Your Repositories</h3>
+                            <ul class="box__mini-list">
+                                <% for ( var i = 0; i < body.length; ++i ) { %>
+                                    <li class="box__mini-list-item">
+                                        <p class="lead lead--nobot">
+                                            <a href="#/repo/<%= body[i].full_name %>"><%= body[i].name %></a>
+                                        </p>
+                                        <span><%= body[i].description %></span>
+                                    </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </script>
+
+        <script id="repo" type="foo/bar">
+                <div class="container">
+                    <div class="columns">
+                        <div class="three-fourths column centered">
+                            <h3 class="box__header">Files</h3>
+                            <ul class="box__mini-list">
+                                <% for ( var i = 0; i < body.tree.length; ++i ) { %>
+                                    <% if ( body.tree[i].type === "tree" ) continue; %>
+                                    <li class="box__mini-list-item">
+                                        <p class="no-margin">
+                                            <a href="#/edit/<%= __user %>/<%= __repo %>?path=<%= body.tree[i].path %>"><%= body.tree[i].path %></a>
+                                        </p>
+                                    </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </script>
+        <script id="edit" type="foo/bar">
+                <div class="container code-editor">
+                    <div class="columns">
+                        <div class="column four-fifths centered">
+                            <h3 class="box__header">
+                               <%= __user %>/<%= __repo %>/<%= body.path %>
+                            </h3>
+                            <div class="box__mini-list">
+                                <pre id="editor"><%= window.atob( body.content ) %></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </script>
+
+        <script src='app/dist/bundle.js'></script>
+    </body>
+</html>
